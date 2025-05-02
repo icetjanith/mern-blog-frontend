@@ -36,7 +36,7 @@ class Home extends Component {
                 date: "March 25, 2025",
                 category: "Career",
                 imageUrl: "/api/placeholder/600/400",
-                comments: 5
+                comments: 8
             }
         ];
         const featuredPost = posts[0];
