@@ -1,0 +1,19 @@
+.main-page{
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+}
+
+.header{
+    height: 3.0rem;
+}
+
+.sidebar{
+    top: 3.5rem;
+}
+
+@media screen and (max-width: 640px) {
+    .sidebar{
+        top: 4.5rem;
+    }
+}

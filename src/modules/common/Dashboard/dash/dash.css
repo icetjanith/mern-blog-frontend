@@ -1,0 +1,9 @@
+.dashboard-content{
+    top: 3.5rem;
+}
+
+@media screen and (max-width: 640px) {
+    .dashboard-content{
+        top: 5.6rem !important;
+    }
+}
