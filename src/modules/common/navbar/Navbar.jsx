@@ -82,7 +82,7 @@ function Navbar() {
                 <div className="hidden md:flex items-center">
                     <ul className="flex font-semibold mr-4">
                         <NavLink to="/" className={({isActive}) => `m-4 font-bold ${isActive ? 'text-purple-500' : ''}`}>Home</NavLink>
-                        <NavLink to="/products" className={({isActive}) => `m-4 ${isActive ? 'text-purple-500' : ''}`}>Projects</NavLink>
+                        <NavLink to="/products" className={({isActive}) => `m-4 ${isActive ? 'text-purple-500' : ''}`}>Posts</NavLink>
                         <NavLink to="/about" className={({isActive}) => `m-4 ${isActive ? 'text-purple-500' : ''}`}>About</NavLink>
                     </ul>
 

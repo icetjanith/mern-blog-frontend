@@ -3,6 +3,7 @@ import Navbar from "../navbar/Navbar.jsx";
 import Footer from "../footer/Footer.jsx";
 import "./home.css";
 import { Search, Menu, X, ChevronRight, User, LogIn, Edit, Bell} from 'lucide-react';
+import PostCard from "../../components/post/Post.jsx";
 
 class Home extends Component {
     render() {
@@ -14,7 +15,7 @@ class Home extends Component {
                 author: "John Doe",
                 date: "April 2, 2025",
                 category: "Development",
-                imageUrl: "/api/placeholder/600/400",
+                imageUrl: "/20.jpg",
                 comments: 8
             },
             {
@@ -24,7 +25,7 @@ class Home extends Component {
                 author: "Jane Smith",
                 date: "March 28, 2025",
                 category: "Design",
-                imageUrl: "/api/placeholder/600/400",
+                imageUrl: "/20.jpg",
                 comments: 12
             },
             {
@@ -34,7 +35,7 @@ class Home extends Component {
                 author: "Alex Johnson",
                 date: "March 25, 2025",
                 category: "Career",
-                imageUrl: "/api/placeholder/600/400",
+                imageUrl: "/20.jpg",
                 comments: 8
             }
         ];
@@ -74,9 +75,9 @@ class Home extends Component {
                                 </div>
                                 <div className="flex items-center gap-3 pt-6">
                                     <div className="flex -space-x-2">
-                                        <img className="w-8 h-8 rounded-full ring-2 ring-white" src="/api/placeholder/40/40" alt="User avatar" />
-                                        <img className="w-8 h-8 rounded-full ring-2 ring-white" src="/api/placeholder/40/40" alt="User avatar" />
-                                        <img className="w-8 h-8 rounded-full ring-2 ring-white" src="/api/placeholder/40/40" alt="User avatar" />
+                                        <img className="w-8 h-8 rounded-full ring-2 ring-white" src="/user.png" alt="User avatar" />
+                                        <img className="w-8 h-8 rounded-full ring-2 ring-white" src="/user.png" alt="User avatar" />
+                                        <img className="w-8 h-8 rounded-full ring-2 ring-white" src="/user.png" alt="User avatar" />
                                     </div>
                                     <span className="text-sm text-slate-600">Join 2,000+ developers worldwide</span>
                                 </div>
@@ -101,105 +102,47 @@ class Home extends Component {
                     </div>
 
                     {/* Featured Posts Section */}
-                    <div className="flex justify-center text-center mb-2 mt-4">
+                    <div className="flex justify-center text-center mb-2 mt-6">
                         <h1 className="text-2xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
                             Featured Posts
                         </h1>
                     </div>
 
-                    <div className="grid gap-3 xl:grid-cols-3 lg:grid-cols-2 p-6 my-4 mx-6">
+                    <div className="grid gap-3 xl:grid-cols-3 lg:grid-cols-2 p-6 my-4 mx-6 mt-6">
                         {posts.map(post => (
                             <div key={post.id}>
-                                <section className="mb-12">
-                                    <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-                                        <div className="flex-col">
-                                            <div className="md:flex-shrink-0">
-                                                <img className="h-48 w-full object-cover" src={post.imageUrl} alt={post.title} />
-                                            </div>
-                                            <div className="p-8">
-                                                <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">{post.category}</div>
-                                                <a href="#" className="block mt-1 text-2xl font-semibold text-gray-900 hover:underline">{post.title}</a>
-                                                <p className="mt-2 text-gray-600">{post.excerpt}</p>
-                                                <div className="mt-4 flex items-center">
-                                                    <div className="flex-shrink-0">
-                                                        <User className="h-10 w-10 rounded-full bg-gray-100 p-2 text-gray-600" />
-                                                    </div>
-                                                    <div className="ml-3">
-                                                        <p className="text-sm font-medium text-gray-900">{post.author}</p>
-                                                        <div className="flex space-x-1 text-sm text-gray-500">
-                                                            <time dateTime="2020-03-16">{post.date}</time>
-                                                            <span aria-hidden="true">&middot;</span>
-                                                            <span>{post.comments} comments</span>
-                                                        </div>
-                                                    </div>
-                                                    <div className="ml-auto">
-                                                        <a
-                                                            href="#"
-                                                            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200"
-                                                        >
-                                                            Read More
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </section>
+                                <PostCard post={post} />
                             </div>
                         ))}
                     </div>
 
                     {/* Latest Posts Section */}
-                    <div className="flex justify-center text-center mb-2 mt-4 mx-6">
+                    <div className="flex justify-center text-center mb-2 mt-6 mx-6">
                         <h1 className="text-2xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
                             Latest Posts
                         </h1>
                     </div>
 
-                    <div className="p-6 my-4 mx-6">
+                    <div className="p-6 mx-6 mt-6">
                         <div className="flex justify-end items-center mb-6">
                             <a href="#" className="text-indigo-600 hover:text-indigo-500 text-sm font-medium flex items-center">
                                 View All <ChevronRight className="ml-1 h-4 w-4" />
                             </a>
                         </div>
                         <div className="grid gap-3 xl:grid-cols-4 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1">
-                            {[...posts, ...posts].slice(0, 4).map((post, index) => (
-                                <div key={`latest-${index}`}>
-                                    <section className="mb-12">
-                                        <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-                                            <div className="flex-col">
-                                                <div className="md:flex-shrink-0">
-                                                    <img className="h-48 w-full object-cover" src={post.imageUrl} alt={post.title} />
-                                                </div>
-                                                <div className="p-6">
-                                                    <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">{post.category}</div>
-                                                    <a href="#" className="block mt-1 text-xl font-semibold text-gray-900 hover:underline">{post.title}</a>
-                                                    <p className="mt-2 text-gray-600 text-sm">{post.excerpt}</p>
-                                                    <div className="mt-4 flex items-center">
-                                                        <div className="flex-shrink-0">
-                                                            <User className="h-8 w-8 rounded-full bg-gray-100 p-1 text-gray-600" />
-                                                        </div>
-                                                        <div className="ml-3">
-                                                            <p className="text-sm font-medium text-gray-900">{post.author}</p>
-                                                            <div className="flex space-x-1 text-xs text-gray-500">
-                                                                <time dateTime="2020-03-16">{post.date}</time>
-                                                                <span aria-hidden="true">&middot;</span>
-                                                                <span>{post.comments} comments</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </section>
-                                </div>
-                            ))}
+                            {
+                                [...posts, ...posts].slice(0, 4).map((post, index) => (
+                                    <div key={`latest-${index}`} className="mb-6">
+                                        <PostCard post={post} compact={true} />
+                                    </div>
+                                ))
+                            }
                         </div>
                     </div>
 
                     {/* Newsletter Section */}
-                    <div id="newsletter" className="p-6 mt-6 mb-8 mx-6">
-                        <section className="rounded-lg shadow-lg overflow-hidden bg-indigo-600 text-white">
+                    <div id="newsletter" className="p-6 mt-6 mx-6">
+                        <section className="rounded-lg shadow-lg  bg-indigo-600 text-white">
                             <div className="px-6 py-12 md:py-16 md:px-12 lg:flex lg:items-center lg:justify-between">
                                 <div>
                                     <h2 className="text-2xl font-extrabold tracking-tight sm:text-3xl">
@@ -225,7 +168,7 @@ class Home extends Component {
                         </section>
                     </div>
                 </div>
-                <Footer/>
+                <div className="mt-28"><Footer/></div>
             </div>
         );
     }
