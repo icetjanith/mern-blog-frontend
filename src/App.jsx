@@ -8,13 +8,9 @@ import SignUp from "./modules/auth/signup/SignUp.jsx";
 import InvalidPage from "./modules/auth/invalid-page/InvalidPage.jsx";
 import PrivateRoute from "./modules/common/PrivateRoute.jsx";
 import DashboardLayout from "./modules/common/Dashboard/DashboardLayout.jsx";
-import {avatarPopUpFunction} from "/src/redux/user/userSlice.js";
-import {useDispatch} from "react-redux";
 import CreatePost from "./modules/common/create-post/CreatePost.jsx";
 
 function App() {
-
-    const dispatch = useDispatch();
 
   return (
     <div>
