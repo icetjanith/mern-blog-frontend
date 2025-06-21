@@ -9,6 +9,9 @@ import InvalidPage from "./modules/auth/invalid-page/InvalidPage.jsx";
 import PrivateRoute from "./modules/common/PrivateRoute.jsx";
 import DashboardLayout from "./modules/common/Dashboard/DashboardLayout.jsx";
 import CreatePost from "./modules/common/create-post/CreatePost.jsx";
+import PostDetail from "./modules/common/post-details/PostDetails.jsx";
+import About from "./modules/common/about/About.jsx";
+import Contact from "./modules/common/contact/Contact.jsx";
 
 function App() {
 
@@ -17,7 +20,10 @@ function App() {
       <BrowserRouter>
           <Routes>
               <Route path="/" element={<Home/>}/>
-              <Route path="/products" element={<Products />}/>
+              <Route path="/posts" element={<Products />}/>
+              <Route path="/about" element={<About/>}/>
+              <Route path="/contact" element={<Contact/>}/>
+              <Route path="/post-details/:id" element={<PostDetail/>}/>
               <Route path="/auth" element={<AuthLayout/>}>
                   <Route path="login" element={<Login/>}/>
                   <Route path="signup" element={<SignUp/>}/>
@@ -25,8 +31,8 @@ function App() {
               </Route>
               <Route element={<PrivateRoute/>}>
                   <Route path="/dashboard" element={<DashboardLayout/>}/>
+                  <Route path="/create-post" element={<CreatePost/>}/>
               </Route>
-              <Route path="/create-post" element={<CreatePost/>}/>
           </Routes>
       </BrowserRouter>
     </div>

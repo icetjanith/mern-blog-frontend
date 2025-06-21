@@ -4,11 +4,11 @@ import { User } from 'lucide-react';
 const PostCard = ({ post, compact = false }) => {
     return (
         <div className="bg-white rounded-lg shadow-lg overflow-hidden h-full">
-            <div className="flex-col h-full">
+            <div className="flex flex-col h-full">
                 <div className="md:flex-shrink-0">
                     <img
                         className={`w-full object-cover ${compact ? 'h-40' : 'h-48'}`}
-                        src={post.imageUrl}
+                        src={post.thumbnail}
                         alt={post.title}
                     />
                 </div>

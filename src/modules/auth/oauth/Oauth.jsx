@@ -44,9 +44,13 @@ function Oauth() {
         <div>
             <button
                 onClick={handleGoogleClick}
-                className="w-full bg-gray-700 flex items-center cursor-pointer justify-center py-2 rounded mb-2">
-                <img src="https://www.svgrepo.com/show/355037/google.svg" className="w-5 h-5 mr-2"/> Sign up
-                with Google
+                type="button"
+                className="w-full flex items-center justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50"
+            >
+                <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.613 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 15.28 0 12.48 0 5.868 0 .252 5.387.252 12s5.616 12 12.228 12c3.168 0 5.948-1.047 7.933-3.027 2.04-2.04 2.68-4.94 2.68-7.273 0-.72-.053-1.387-.16-1.947H12.48z"/>
+                </svg>
+                Google
             </button>
         </div>
     );
