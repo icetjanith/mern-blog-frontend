@@ -25,11 +25,14 @@ const userSlice = createSlice({
         signInEnd:(state)=>{
             state.loading = false;
         },
-        avatarPopUpFunction:(state)=>{
-            state.avatarPopUp = !state.avatarPopUp;
+        signOut:(state)=>{
+            state.currentUser = null;
+        },
+        avatarPopUpFunction:(state, action)=>{
+            state.avatarPopUp = action.payload;
         }
     }
 });
 
-export const {signInStart, signInSuccess, signInFailure, signInEnd, avatarPopUpFunction} = userSlice.actions;
+export const {signInStart, signInSuccess, signInFailure, signInEnd, signOut, avatarPopUpFunction} = userSlice.actions;
 export default userSlice.reducer;

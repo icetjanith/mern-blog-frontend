@@ -14,7 +14,9 @@ const handleError = (error) => {
 
 export const _post = async ({endpointUrl, payload, callback}) => {
     try {
-        const response = await axiosInstance.post(endpointUrl, payload);
+        const response = await axiosInstance.post(endpointUrl, payload,{
+            withCredentials: true,
+        });
         if(callback) callback(response);
         console.log(response);
         return response;
@@ -23,7 +25,7 @@ export const _post = async ({endpointUrl, payload, callback}) => {
     }
 }
 
-export const _get = async ({endpointUrl, payload, callback}) => {
+export const _get = async ({endpointUrl}) => {
     try{
         return await axiosInstance.get(endpointUrl);
     }catch (error) {

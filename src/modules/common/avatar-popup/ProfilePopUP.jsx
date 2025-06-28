@@ -14,8 +14,14 @@ function ProfilePopUp() {
     const {currentUser} = useSelector((state) => state.user);
     const truncatedEmail = currentUser.user.email.length > 20 ? currentUser.user.email.slice(0, 20)+"..." : currentUser.user.email;
 
+    const modelRef = useRef();
+
+    useEffect(()=>{
+
+    },[isOpen]);
+
     return (
-        <div className="main">
+        (isOpen && <div className="main">
             <div className="absolute top-14 z-20 right-1 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-sm shadow-sm dark:bg-gray-700 dark:divide-gray-600">
                 <div className="px-4 py-3" role="none">
                     <p className="text-sm text-gray-900 dark:text-white" role="none">
@@ -36,22 +42,22 @@ function ProfilePopUp() {
                     </li>
                     <li>
                         <div
-                           className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                           role="menuitem">Settings</div>
+                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                            role="menuitem">Settings</div>
                     </li>
                     <li>
                         <div
-                           className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                           role="menuitem">Earnings</div>
+                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                            role="menuitem">Earnings</div>
                     </li>
                     <li>
                         <div
-                           className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                           role="menuitem">Sign out</div>
+                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                            role="menuitem">Sign out</div>
                     </li>
                 </ul>
             </div>
-        </div>
+        </div>)
     );
 }
 

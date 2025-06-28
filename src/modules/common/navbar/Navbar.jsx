@@ -33,7 +33,7 @@ function Navbar() {
     }, []);
 
     const avatarPopUpBtn = () => {
-        dispatch(avatarPopUpFunction());
+        dispatch(avatarPopUpFunction(true));
     };
 
     const setThemeColor = () => {

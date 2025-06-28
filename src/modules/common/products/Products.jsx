@@ -1,101 +1,58 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import Navbar from "../navbar/Navbar.jsx";
+import axios from "axios";
+import PostCard from "../../components/post/Post.jsx";
 
 function Products() {
-    // Sample blog post data (replace with your actual data source)
-    const allPosts = [
-        {
-            id: 1,
-            title: "Getting Started with React",
-            excerpt: "Learn the fundamentals of React and build your first application.",
-            author: "Jane Doe",
-            date: "May 1, 2025",
-            category: "Development",
-            tags: ["react", "javascript", "frontend"]
-        },
-        {
-            id: 2,
-            title: "Advanced CSS Techniques",
-            excerpt: "Explore modern CSS features to create stunning layouts.",
-            author: "John Smith",
-            date: "April 28, 2025",
-            category: "Design",
-            tags: ["css", "design", "web"]
-        },
-        {
-            id: 3,
-            title: "Introduction to State Management",
-            excerpt: "Compare different state management solutions for React applications.",
-            author: "Alex Johnson",
-            date: "April 25, 2025",
-            category: "Development",
-            tags: ["react", "state", "redux"]
-        },
-        {
-            id: 4,
-            title: "Optimizing Website Performance",
-            excerpt: "Tips and tricks to improve your website's loading speed.",
-            author: "Sarah Williams",
-            date: "April 22, 2025",
-            category: "Performance",
-            tags: ["performance", "optimization", "web"]
-        },
-        {
-            id: 5,
-            title: "Responsive Design Best Practices",
-            excerpt: "Create websites that look great on all devices with these techniques.",
-            author: "Michael Brown",
-            date: "April 20, 2025",
-            category: "Design",
-            tags: ["responsive", "design", "css"]
-        },
-        {
-            id: 6,
-            title: "Building Accessible Web Applications",
-            excerpt: "Learn how to make your web applications accessible to everyone.",
-            author: "Emma Davis",
-            date: "April 18, 2025",
-            category: "Accessibility",
-            tags: ["accessibility", "a11y", "web"]
-        },
-    ];
 
-    // State for filters and pagination
     const [currentPage, setCurrentPage] = useState(1);
-    const [postsPerPage] = useState(6);
+    const [postsPerPage] = useState(9);
     const [selectedCategory, setSelectedCategory] = useState("");
-    const [sortBy, setSortBy] = useState("newest"); // Options: newest, oldest, alphabetical
+    const [sortBy, setSortBy] = useState("asc"); // Options: newest, oldest, alphabetical
+    const [sortOrder, setSortOrder] = useState("desc");
+    const [limit, setLimit] = useState(9);
+
+    const [apiPosts, setApiPosts] = useState([]);
+    const [totalPages, setTotalPages] = useState(1);
+    const [prevPage, setPrevPage] = useState(1);
+    const [nextPage, setNextPage] = useState(1);
 
     // Get unique categories for the filter
-    const categories = ["All", ...new Set(allPosts.map(post => post.category))];
+    const categories = ["All", ...new Set(apiPosts.map(post => post.category))];
 
-    // Filter posts based on selected category
-    const filteredPosts = selectedCategory === "" || selectedCategory === "All"
-        ? allPosts
-        : allPosts.filter(post => post.category === selectedCategory);
+    const handleNextPageBtn = (currentPage) => {
+        setCurrentPage(currentPage+1);
+    }
 
-    // Sort posts based on selection
-    const sortedPosts = [...filteredPosts].sort((a, b) => {
-        if (sortBy === "oldest") {
-            return new Date(a.date) - new Date(b.date);
-        } else if (sortBy === "alphabetical") {
-            return a.title.localeCompare(b.title);
-        } else {
-            // Default: newest first
-            return new Date(b.date) - new Date(a.date);
+    const handlePrevBtn = (currentPage) => {
+        setCurrentPage(currentPage-1);
+    }
+
+    const handlePaginationBtn = (number) => {
+        setCurrentPage(number);
+    }
+
+    const getPosts = async () => {
+        try{
+            const response = await axios.get(
+                "http://localhost:3006/api/post",
+                {params: {
+                    page: currentPage,
+                        limit: postsPerPage,
+                        order: sortOrder
+                    }}
+            );
+            setApiPosts(response.data.posts);
+            setTotalPages(response.data.totalPages);
+            console.log(response.data.posts);
+        }catch(err){
+            console.log(err);
         }
-    });
+    }
 
-    // Get current posts for pagination
-    const indexOfLastPost = currentPage * postsPerPage;
-    const indexOfFirstPost = indexOfLastPost - postsPerPage;
-    const currentPosts = sortedPosts.slice(indexOfFirstPost, indexOfLastPost);
-    const totalPages = Math.ceil(sortedPosts.length / postsPerPage);
-
-    // Change page
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
-    const nextPage = () => setCurrentPage(prev => Math.min(prev + 1, totalPages));
-    const prevPage = () => setCurrentPage(prev => Math.max(prev - 1, 1));
+    useEffect(() => {
+        getPosts();
+    },[sortOrder, currentPage]);
 
     return (
         <div className="min-h-screen bg-gray-50">
@@ -136,42 +93,26 @@ function Products() {
                                 </label>
                                 <select
                                     id="sort-by"
-                                    value={sortBy}
-                                    onChange={(e) => setSortBy(e.target.value)}
+                                    value={sortOrder}
+                                    onChange={(e) => setSortOrder(e.target.value)}
                                     className="bg-white border border-gray-300 rounded-md py-2 px-3 shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                                 >
-                                    <option value="newest">Newest First</option>
-                                    <option value="oldest">Oldest First</option>
+                                    <option value="desc">Newest First</option>
+                                    <option value="asc">Oldest First</option>
                                     <option value="alphabetical">Alphabetical</option>
                                 </select>
                             </div>
                         </div>
                         <div className="text-sm text-gray-600">
-                            Showing {indexOfFirstPost + 1}-{Math.min(indexOfLastPost, sortedPosts.length)} of {sortedPosts.length} posts
+                            Showing {postsPerPage} of {postsPerPage*totalPages} posts
                         </div>
                     </div>
 
                     {/* Posts grid */}
                     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-                        {currentPosts.map(post => (
-                            <div key={post.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
-                                <div className="h-40 bg-gray-200"></div>
-                                <div className="p-6">
-                                    <div className="flex justify-between items-start mb-2">
-                                        <span className="inline-block bg-indigo-100 text-indigo-800 text-xs px-2 py-1 rounded-md font-medium">
-                                            {post.category}
-                                        </span>
-                                        <span className="text-sm text-gray-500">{post.date}</span>
-                                    </div>
-                                    <h2 className="text-xl font-bold mb-2 text-gray-800">{post.title}</h2>
-                                    <p className="text-gray-600 mb-4">{post.excerpt}</p>
-                                    <div className="flex justify-between items-center">
-                                        <span className="text-sm font-medium">By {post.author}</span>
-                                        <button className="text-indigo-600 hover:text-indigo-800 font-medium">
-                                            Read More →
-                                        </button>
-                                    </div>
-                                </div>
+                        {apiPosts.map(post => (
+                            <div key={post.id}>
+                                <PostCard post={post} compact={true}/>
                             </div>
                         ))}
                     </div>
@@ -180,7 +121,7 @@ function Products() {
                     {totalPages > 1 && (
                         <div className="flex justify-center items-center gap-2">
                             <button
-                                onClick={prevPage}
+                                onClick={() => handlePrevBtn(currentPage)}
                                 disabled={currentPage === 1}
                                 className={`px-4 py-2 rounded-md ${
                                     currentPage === 1
@@ -193,7 +134,7 @@ function Products() {
                             {Array.from({ length: totalPages }, (_, i) => i + 1).map(number => (
                                 <button
                                     key={number}
-                                    onClick={() => paginate(number)}
+                                    onClick={() => handlePaginationBtn(number)}
                                     className={`w-10 h-10 rounded-md flex items-center justify-center ${
                                         currentPage === number
                                             ? 'bg-indigo-600 text-white'
@@ -204,7 +145,7 @@ function Products() {
                                 </button>
                             ))}
                             <button
-                                onClick={nextPage}
+                                onClick={() => handleNextPageBtn(currentPage)}
                                 disabled={currentPage === totalPages}
                                 className={`px-4 py-2 rounded-md ${
                                     currentPage === totalPages
